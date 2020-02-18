@@ -36,8 +36,7 @@ func GetPost(id int) (*Post, error) {
 	// dirty, we assume that the data is ordered
 	if len(posts.Posts) > id-1 {
 		return &posts.Posts[id-1], nil
-	} else {
-		fmt.Println("OUPS")
-		return nil, errors.New("Oups")
 	}
+	fmt.Println("OUPS")
+	return nil, errors.New("Oups")
 }
