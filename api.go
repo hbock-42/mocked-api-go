@@ -1,6 +1,5 @@
 package main
 
-//import two built-in Go packages to use for building our application
 import (
 	"fmt"
 	"net/http"
@@ -29,7 +28,13 @@ func saluthandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println(err)
 		} else {
-			GetPost(postID)
+			post, err := GetPost(postID)
+			if err != nil {
+				// todo: write custom error response to the response writer
+				fmt.Fprintf(w, err.Error())
+			} else {
+				fmt.Println(*post)
+			}
 		}
 	}
 }

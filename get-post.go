@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"os"
 )
@@ -25,9 +24,7 @@ type Post struct {
 func GetPost(id int) (*Post, error) {
 	jsonFile, err := os.Open("./data/posts.json")
 	if err != nil {
-		fmt.Println(err)
-	} else {
-
+		return nil, err
 	}
 	defer jsonFile.Close()
 
@@ -36,8 +33,7 @@ func GetPost(id int) (*Post, error) {
 	json.Unmarshal(byteValue, &posts)
 	// dirty, we assume that the data is ordered
 	if len(posts.Posts) > id-1 {
-		return &posts.Posts[id-1], nil
+		return &(posts.Posts[id-1]), nil
 	}
-	fmt.Println("OUPS")
-	return nil, errors.New("Oups")
+	return nil, errors.New("Unable to find a post with id " + string(id))
 }
