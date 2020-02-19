@@ -21,7 +21,7 @@ type Post struct {
 	ID        int    `json:"id"`
 	Title     string `json:"title"`
 	Body      string `json:"body"`
-	MinSalary int    `json:"min_salary"`
+	MinSalary int    `json:"minSalary"`
 }
 
 // PostsHandler regroup methods thats handle posts request
