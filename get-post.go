@@ -17,10 +17,11 @@ type Posts struct {
 
 // Post from a user
 type Post struct {
-	UserID int    `json:"userId"`
-	ID     int    `json:"id"`
-	Title  string `json:"title"`
-	Body   string `json:"body"`
+	UserID    int    `json:"userId"`
+	ID        int    `json:"id"`
+	Title     string `json:"title"`
+	Body      string `json:"body"`
+	MinSalary int    `json:"min_salary"`
 }
 
 // PostsHandler regroup methods thats handle posts request
