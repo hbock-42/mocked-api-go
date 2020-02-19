@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"io/ioutil"
+	"net/http"
 	"os"
 )
 
@@ -20,9 +21,36 @@ type Comment struct {
 	Body   string `json:"body"`
 }
 
-// GetComment returns all Comments linked to a postID
-func GetComment(postID int) ([]Comment, error) {
-	jsonFile, err := os.Open("./data/posts.json")
+// CommentsHandler regroup methods thats handle comments request
+type CommentsHandler struct {
+}
+
+// Handler who takes a post id as arguments
+func (h *CommentsHandler) Handler(postID int) http.Handler {
+	return http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		switch req.Method {
+		case "GET":
+			comments, err := h.GetComments(postID)
+			if err != nil {
+				http.Error(res, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			json, err := json.Marshal(comments)
+			if err != nil {
+				http.Error(res, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			res.Header().Set("Content-Type", "application/json")
+			res.Write(json)
+		default:
+			http.Error(res, "Only GET is allowed", http.StatusMethodNotAllowed)
+		}
+	})
+}
+
+// GetComments returns all Comments linked to a postID
+func (h *CommentsHandler) GetComments(postID int) ([]Comment, error) {
+	jsonFile, err := os.Open("./data/comments.json")
 	if err != nil {
 		return nil, err
 	}
