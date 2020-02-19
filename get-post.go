@@ -6,13 +6,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	// "encoding/json"
 )
 
+// Posts contains an array of Post
 type Posts struct {
 	Posts []Post `json:"posts"`
 }
 
+// Post from a user
 type Post struct {
 	UserID int    `json:"userId"`
 	ID     int    `json:"id"`
