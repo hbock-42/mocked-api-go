@@ -22,6 +22,7 @@ type App struct {
 }
 
 func (h *App) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+	(res).Header().Set("Access-Control-Allow-Origin", "*")
 	var head string
 	head, req.URL.Path = ShiftPath(req.URL.Path)
 	if head == "posts" {
